@@ -5,7 +5,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        echo "前台";
+        echo "前台888";
         die;
     }
 }
