@@ -1,11 +1,12 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Common\bus\WechatBus;
 class IndexController extends Controller
 {
     public function index()
     {
-        echo "前台888";
-        die;
+        $wechat=new WechatBus();
+        $wechat->checkSignature();
     }
 }
