@@ -1,0 +1,35 @@
+#
+# .htaccess
+# 
+#
+# 为了正常启用URL Rewrite，请将apache配置文件中“LoadModule rewrite_module modules/mod_rewrite.so”
+# 前的注释去掉，并将apache的DocumentRoot开启AllowOverride
+# 
+# 如下所示为apache下httpd.conf的代码片段：
+# <Directory "YourDocumentRoot">
+#   Options Indexes FollowSymLinks ExecCGI Includes
+#   AllowOverride All
+#   Order allow,deny
+#   Allow from all
+# </Directory>
+#
+
+RewriteEngine On
+
+RewriteRule \.svn /Public/404.html [L]
+
+RewriteCond %{REQUEST_URI} ^/bbs.html [NC]
+RewriteRule ^(.*)$ /bbs [L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*\.(gif|jpg|png)$ index.php?g=static&m=image&a=index&file=$0 [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+
+php_value max_execution_time 1200 
+php_value memory_limit 200M 
+php_value post_max_size 200M 
+php_value upload_max_filesize 200M 

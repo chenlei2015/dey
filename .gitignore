@@ -1,0 +1,6 @@
+# CakePHP 3
+/.idea/*
+
+/Application/Runtime/*
+
+
