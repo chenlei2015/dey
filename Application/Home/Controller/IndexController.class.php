@@ -53,8 +53,16 @@ class IndexController extends Controller
                 echo $info;
             }
         }elseif(strtolower($postObj->MsgType == 'text')){
-                if($postObj->Content == '姚欣雅'){
-                    $content = '她是个大傻瓜，哈哈！';
+                switch($postObj->Content){
+                    case"姚欣雅":
+                        $content = '她是个大傻瓜，哈哈！';
+                        break;
+                    case"职业":
+                        $content = '白衣天使，牛牛！';
+                        break;
+                    case"老公":
+                        $content = '她老公是陈磊，地球上最帅的人！';
+                        break;
                 }
                 $toUser = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
