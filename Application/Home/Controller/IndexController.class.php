@@ -66,8 +66,8 @@ class IndexController extends Controller
                         $content = '她老公是陈磊，地球上最帅的人！';
                         $msgType = 'text';
                         break;
-                    case"魔镜":
-                        $PicUrl = 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png';
+                    case"慕课":
+                        $PicUrl = 'http://www.imooc.com/static/img/common/logo.png';
                         $msgType = 'image';
                         break;
                 }
