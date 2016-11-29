@@ -1,7 +1,6 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-use Common\bus\WechatBus;
 class IndexController extends Controller
 {
     public function index()
@@ -53,6 +52,23 @@ class IndexController extends Controller
                 $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $content);
                 echo $info;
             }
+        }elseif(strtolower($postObj->MsgType == 'text')){
+                if($postObj->Content == '姚欣雅'){
+                    $content = '她是个大傻瓜，哈哈！';
+                }
+                $toUser = $postObj->FromUserName;
+                $fromUser = $postObj->ToUserName;
+                $time = time();
+                $msgType = 'text';
+                $template = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                <Content><![CDATA[%s]]></Content>
+                                </xml>";
+                $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $content);
+                echo $info;
         }
 
     }
