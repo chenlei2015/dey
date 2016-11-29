@@ -67,7 +67,7 @@ class IndexController extends Controller
                         $msgType = 'text';
                         break;
                     case"魔镜":
-                        $PicUrl = 'http://e.hiphotos.baidu.com/image/h%3D360/sign=85c7a9d07fec54e75eec1c18893a9bfd/314e251f95cad1c8037ed8c97b3e6709c83d5112.jpg';
+                        $PicUrl = 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png';
                         $msgType = 'image';
                         break;
                 }
