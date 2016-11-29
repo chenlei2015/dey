@@ -6,20 +6,20 @@ class IndexController extends Controller
 {
     public function index()
     {
-        //»ñµÃ²ÎÊý signature nonce token timestamp echostr
+        //èŽ·å¾—å‚æ•° signature nonce token timestamp echostr
         $nonce     = $_GET['nonce'];
         $token     = 'relay';
         $timestamp = $_GET['timestamp'];
         $echostr   = $_GET['echostr'];
         $signature = $_GET['signature'];
-        //ÐÎ³ÉÊý×é£¬È»ºó°´×ÖµäÐòÅÅÐò
+        //å½¢æˆæ•°ç»„ï¼Œç„¶åŽæŒ‰å­—å…¸åºæŽ’åº
         $array = array();
         $array = array($nonce, $timestamp, $token);
         sort($array);
-        //Æ´½Ó³É×Ö·û´®,sha1¼ÓÃÜ £¬È»ºóÓësignature½øÐÐÐ£Ñé
+        //æ‹¼æŽ¥æˆå­—ç¬¦ä¸²,sha1åŠ å¯† ï¼Œç„¶åŽä¸Žsignatureè¿›è¡Œæ ¡éªŒ
         $str = sha1( implode( $array ) );
         if( $str  == $signature && $echostr ){
-            //µÚÒ»´Î½ÓÈëweixin api½Ó¿ÚµÄÊ±ºò
+            //ç¬¬ä¸€æ¬¡æŽ¥å…¥weixin apiæŽ¥å£çš„æ—¶å€™
             echo  $echostr;
             exit;
         }else{
@@ -29,20 +29,20 @@ class IndexController extends Controller
 
     public function reponseMsg()
     {
-        //1.»ñÈ¡µ½Î¢ÐÅÍÆËÍ¹ýÀ´postÊý¾Ý£¨xml¸ñÊ½£©
+        //1.èŽ·å–åˆ°å¾®ä¿¡æŽ¨é€è¿‡æ¥postæ•°æ®ï¼ˆxmlæ ¼å¼ï¼‰
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
-        //2.´¦ÀíÏûÏ¢ÀàÐÍ£¬²¢ÉèÖÃ»Ø¸´ÀàÐÍºÍÄÚÈÝ
+        //2.å¤„ç†æ¶ˆæ¯ç±»åž‹ï¼Œå¹¶è®¾ç½®å›žå¤ç±»åž‹å’Œå†…å®¹
         $postObj = simplexml_load_string($postArr);
-        //ÅÐ¶Ï¸ÃÊý¾Ý°üÊÇ·ñÊÇ¶©ÔÄµÄÊÂ¼þÍÆËÍ
+        //åˆ¤æ–­è¯¥æ•°æ®åŒ…æ˜¯å¦æ˜¯è®¢é˜…çš„äº‹ä»¶æŽ¨é€
         if (strtolower($postObj->MsgType) == 'event') {
-            //Èç¹ûÊÇ¹Ø×¢ subscribe ÊÂ¼þ
+            //å¦‚æžœæ˜¯å…³æ³¨ subscribe äº‹ä»¶
             if (strtolower($postObj->Event == 'subscribe')) {
-                //»Ø¸´ÓÃ»§ÏûÏ¢(´¿ÎÄ±¾¸ñÊ½)
+                //å›žå¤ç”¨æˆ·æ¶ˆæ¯(çº¯æ–‡æœ¬æ ¼å¼)
                 $toUser = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
                 $time = time();
                 $msgType = 'text';
-                $content = '»¶Ó­¹Ø×¢ÎÒÃÇµÄÎ¢ÐÅ¹«ÖÚÕËºÅ' . $postObj->FromUserName . '-' . $postObj->ToUserName;
+                $content = 'æ¬¢è¿Žå…³æ³¨æˆ‘ä»¬çš„å¾®ä¿¡å…¬ä¼—è´¦å·' . $postObj->FromUserName . '-' . $postObj->ToUserName;
                 $template = "<xml>
 							<ToUserName><![CDATA[%s]]></ToUserName>
 							<FromUserName><![CDATA[%s]]></FromUserName>
