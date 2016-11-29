@@ -56,26 +56,43 @@ class IndexController extends Controller
                 switch($postObj->Content){
                     case"姚欣雅":
                         $content = '她是个大傻瓜，哈哈！';
+                        $msgType = 'text';
                         break;
                     case"职业":
                         $content = '白衣天使，牛牛！';
+                        $msgType = 'text';
                         break;
                     case"老公":
                         $content = '她老公是陈磊，地球上最帅的人！';
+                        $msgType = 'text';
+                        break;
+                    case"魔镜":
+                        $PicUrl = 'http://e.hiphotos.baidu.com/image/h%3D360/sign=85c7a9d07fec54e75eec1c18893a9bfd/314e251f95cad1c8037ed8c97b3e6709c83d5112.jpg';
+                        $msgType = 'image';
                         break;
                 }
                 $toUser = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
                 $time = time();
-                $msgType = 'text';
-                $template = "<xml>
+               if($msgType == 'text'){
+                   $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
                                 <CreateTime>%s</CreateTime>
                                 <MsgType><![CDATA[%s]]></MsgType>
                                 <Content><![CDATA[%s]]></Content>
                                 </xml>";
-                $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $content);
+                   $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $content);
+               }else{
+                   $template = "<xml>
+                             <ToUserName><![CDATA[%s]]></ToUserName>
+                             <FromUserName><![CDATA[%s]]></FromUserName>
+                             <CreateTime>%s</CreateTime>
+                             <MsgType><![CDATA[%s]]></MsgType>
+                             <PicUrl><![CDATA[%s]]></PicUrl>
+                             </xml>";
+                   $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $PicUrl);
+               }
                 echo $info;
         }
 
