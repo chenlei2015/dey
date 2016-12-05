@@ -59,7 +59,7 @@ class IndexController extends Controller
                         $msgType = 'text';
                         break;
                     case"职业":
-                        $content = '白衣天使，牛不牛！';
+                        $content = '白衣天使，牛牛！';
                         $msgType = 'text';
                         break;
                     case"老公":
