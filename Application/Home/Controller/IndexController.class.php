@@ -1,8 +1,11 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Home\Logic\Wechat;
 class IndexController extends Controller
 {
+    public $appid='wx479f5a0a32ee9cee';
+    public $appsecret='d4624c36b6795d1d99dcf0547af5443d';
     public function index()
     {
         //获得参数 signature nonce token timestamp echostr
@@ -22,6 +25,7 @@ class IndexController extends Controller
             echo  $echostr;
             exit;
         }else{
+            //获取access_token
             return $this->reponseMsg();
         }
     }
@@ -64,6 +68,11 @@ class IndexController extends Controller
                         break;
                     case"老公":
                         $content = '她老公是陈磊，地球上最帅的人！';
+                        $msgType = 'text';
+                        break;
+                    case"令牌":
+                        $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
+                        $content = $this->http_curl($url);
                         $msgType = 'text';
                         break;
                     case"图文":
@@ -126,5 +135,31 @@ class IndexController extends Controller
                 echo $info;
         }
 
+    }
+
+    /**
+     * @param $url 接口url
+     * @param string $type 请求类型
+     * @param string $res  返回数据类型
+     * @param string $arr  post请求参数
+     * @return mixed
+     */
+    public function http_curl($url,$type="get",$res="json",$arr=""){
+        // 初始化url
+        $ch=curl_init();
+        //设置curl的参数
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        if($type="post"){
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$arr);
+        }
+        //采集
+        $output=curl_exec($ch);
+        //关闭
+        curl_close($ch);
+        if($res="json"){
+           return json_decode($output,true);
+        }
     }
 }
