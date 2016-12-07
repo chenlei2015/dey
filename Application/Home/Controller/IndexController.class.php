@@ -26,6 +26,12 @@ class IndexController extends Controller
             exit;
         }else{
             //获取access_token
+            $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
+            if(empty(session('access_token'))){
+                $data=$this->http_curl($url);
+                session(array('access_token'=>$data['access_token'],'expires_in'=>$data['expire']));
+            }
+            //具体逻辑
             return $this->reponseMsg();
         }
     }
@@ -71,9 +77,7 @@ class IndexController extends Controller
                         $msgType = 'text';
                         break;
                     case"令牌":
-                        $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
-                        $data=$this->http_curl($url);
-                        $content =implode(',',$data);
+                        $content =session('access_token');
                         $msgType = 'text';
                         break;
                     case"图文":
