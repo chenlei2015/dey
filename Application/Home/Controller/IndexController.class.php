@@ -73,7 +73,7 @@ class IndexController extends Controller
                     case"令牌":
                         $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
                         $data=$this->http_curl($url);
-                        $content =$data['access_token'];
+                        $content =implode(',',$data);
                         $msgType = 'text';
                         break;
                     case"图文":
