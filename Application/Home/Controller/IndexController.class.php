@@ -29,7 +29,7 @@ class IndexController extends Controller
             $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
             if(empty(session('access_token'))){
                 $data=$this->http_curl($url);
-                session(array('access_token'=>$data['access_token'],'expires_in'=>$data['expire']));
+                session(array('access_token'=>$data['access_token'],'expire'=>$data['expires_in']));
             }
             //具体逻辑
             return $this->reponseMsg();
