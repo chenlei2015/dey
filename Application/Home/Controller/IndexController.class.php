@@ -25,12 +25,6 @@ class IndexController extends Controller
             echo  $echostr;
             exit;
         }else{
-            //获取access_token
-            $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
-            if(empty(session('access_token'))){
-                $data=$this->http_curl($url);
-                session(array('access_token'=>$data['access_token'],'expire'=>$data['expires_in']));
-            }
             //具体逻辑
             return $this->reponseMsg();
         }
@@ -38,6 +32,13 @@ class IndexController extends Controller
 
     public function reponseMsg()
     {
+        //获取access_token
+        $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->appsecret;
+        if(empty(session('access_token'))){
+            $data=$this->http_curl($url);
+            session(array('access_token'=>$data['access_token'],'expire'=>$data['expires_in']));
+        }
+        
         //1.获取到微信推送过来post数据（xml格式）
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
         //2.处理消息类型，并设置回复类型和内容
